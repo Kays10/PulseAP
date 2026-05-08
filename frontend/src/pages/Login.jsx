@@ -30,16 +30,20 @@ const Login = () => {
       <div className="max-w-md w-full mx-4">
         {/* VOD Group Branding Header */}
         <div className="text-center mb-8">
-          <div className="inline-block bg-[#2D333A] p-6 rounded-2xl shadow-xl mb-4">
-            <h1 className="text-4xl font-black text-white tracking-tighter flex items-center gap-2">
-              VOD <span className="text-[#FBC02D] font-light text-xl rotate-90 origin-left ml-2">GROUP</span>
-            </h1>
+          <div className="inline-block bg-[#2D333A] px-8 py-6 rounded-2xl shadow-xl mb-4">
+            <div className="flex items-center">
+              <span className="text-5xl font-black text-white tracking-tighter">VOD</span>
+              <div className="flex flex-col ml-2 border-l-2 border-[#FBC02D] pl-2 items-start">
+                <span className="text-[#FBC02D] text-xs font-black tracking-[0.2em] leading-none uppercase">Group</span>
+                <span className="text-white/40 text-[10px] font-bold tracking-widest leading-none mt-1">SOLUTIONS</span>
+              </div>
+            </div>
           </div>
           <div className="flex items-center justify-center gap-2 text-[#2D333A]">
             <Activity size={24} className="animate-pulse" />
             <span className="text-2xl font-bold tracking-tight">PulseAP</span>
           </div>
-          <p className="text-[#2D333A] font-medium mt-2">Ruckus AP Monitoring System</p>
+          <p className="text-[#2D333A] font-medium mt-2">AP Monitoring System</p>
         </div>
 
         {/* Login Card */}

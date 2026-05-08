@@ -31,7 +31,10 @@ const Layout = ({ children }) => {
       <div className="w-64 bg-vod-dark text-white flex flex-col">
         <div className="p-6 flex flex-col border-b border-slate-700">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-2xl font-black tracking-tighter">VOD <span className="text-vod-yellow font-light text-xs rotate-90 origin-left inline-block">GROUP</span></span>
+            <span className="text-2xl font-black tracking-tighter">VOD</span>
+            <div className="flex flex-col border-l border-vod-yellow pl-1.5">
+              <span className="text-vod-yellow text-[8px] font-black uppercase leading-none">Group</span>
+            </div>
           </div>
           <div className="flex items-center gap-2 text-vod-yellow">
             <Activity size={18} />
