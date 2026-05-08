@@ -28,10 +28,15 @@ const Layout = ({ children }) => {
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <div className="w-64 bg-slate-900 text-white flex flex-col">
-        <div className="p-6 flex items-center gap-3 border-b border-slate-800">
-          <Activity className="text-primary-400 h-8 w-8" />
-          <span className="text-xl font-bold tracking-tight">PulseAP</span>
+      <div className="w-64 bg-vod-dark text-white flex flex-col">
+        <div className="p-6 flex flex-col border-b border-slate-700">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl font-black tracking-tighter">VOD <span className="text-vod-yellow font-light text-xs rotate-90 origin-left inline-block">GROUP</span></span>
+          </div>
+          <div className="flex items-center gap-2 text-vod-yellow">
+            <Activity size={18} />
+            <span className="text-lg font-bold tracking-tight">PulseAP</span>
+          </div>
         </div>
         
         <nav className="flex-1 p-4 space-y-2">
@@ -41,7 +46,7 @@ const Layout = ({ children }) => {
               to={item.path}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 location.pathname === item.path 
-                ? 'bg-primary-600 text-white' 
+                ? 'bg-vod-yellow text-vod-dark font-bold' 
                 : 'text-slate-400 hover:bg-slate-800 hover:text-white'
               }`}
             >
