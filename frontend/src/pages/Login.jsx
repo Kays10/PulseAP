@@ -30,20 +30,20 @@ const Login = () => {
       <div className="max-w-md w-full mx-4">
         {/* VOD Group Branding Header */}
         <div className="text-center mb-8">
-          <div className="inline-block bg-[#2D333A] px-8 py-6 rounded-2xl shadow-xl mb-4">
-            <div className="flex items-center">
-              <span className="text-5xl font-black text-white tracking-tighter">VOD</span>
-              <div className="flex flex-col ml-2 border-l-2 border-[#FBC02D] pl-2 items-start">
-                <span className="text-[#FBC02D] text-xs font-black tracking-[0.2em] leading-none uppercase">Group</span>
-                <span className="text-white/40 text-[10px] font-bold tracking-widest leading-none mt-1">SOLUTIONS</span>
+          <div className="inline-block bg-[#2D333A] px-10 py-8 rounded-2xl shadow-xl mb-6">
+            <div className="flex items-center justify-center">
+              <span className="text-6xl font-black text-white tracking-tighter leading-none">VOD</span>
+              <div className="flex flex-col ml-3 border-l-4 border-[#FBC02D] pl-3 items-start justify-center">
+                <span className="text-[#FBC02D] text-sm font-black tracking-[0.3em] uppercase leading-none">GROUP</span>
+                <span className="text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase leading-none mt-1.5">SOLUTIONS</span>
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-2 text-[#2D333A]">
-            <Activity size={24} className="animate-pulse" />
-            <span className="text-2xl font-bold tracking-tight">PulseAP</span>
+          <div className="flex items-center justify-center gap-3 text-[#2D333A]">
+            <Activity size={28} className="animate-pulse" />
+            <span className="text-3xl font-black tracking-tight">PulseAP</span>
           </div>
-          <p className="text-[#2D333A] font-medium mt-2">AP Monitoring System</p>
+          <p className="text-[#2D333A]/80 font-bold mt-2 uppercase tracking-widest text-xs">AP Monitoring System</p>
         </div>
 
         {/* Login Card */}
