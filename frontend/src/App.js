@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import VPNProfiles from './pages/VPNProfiles';
-import UserManagement from './pages/UserManagement';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 
@@ -35,13 +34,6 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <VPNProfiles />
-            </Layout>
-          </ProtectedRoute>
-        } />
-        <Route path="/users" element={
-          <ProtectedRoute>
-            <Layout>
-              <UserManagement />
             </Layout>
           </ProtectedRoute>
         } />
