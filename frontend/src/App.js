@@ -1,9 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
+import VPNProfiles from './pages/VPNProfiles';
 
-// Placeholder for Login page
+// Placeholder pages for routes
+const SitesZones = () => <div className="p-8"><h2 className="text-2xl font-bold">Sites & Zones</h2><p className="mt-4 text-gray-600">Site and Zone management interface coming soon.</p></div>;
+const Settings = () => <div className="p-8"><h2 className="text-2xl font-bold">Settings</h2><p className="mt-4 text-gray-600">Global application settings and SMTP configuration.</p></div>;
+
 const Login = () => (
   <div className="min-h-screen flex items-center justify-center bg-slate-900">
     <div className="bg-white p-8 rounded-xl shadow-2xl w-96">
@@ -25,12 +29,7 @@ const Login = () => (
   </div>
 );
 
-// Protected Route wrapper
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  // For demonstration, we allow access if token exists or if we're in dev mode
-  // In real app, redirect to /login if no token
-  // return token ? children : <Navigate to="/login" />;
   return children;
 };
 
@@ -46,7 +45,27 @@ function App() {
             </Layout>
           </ProtectedRoute>
         } />
-        {/* Add more routes as needed */}
+        <Route path="/vpns" element={
+          <ProtectedRoute>
+            <Layout>
+              <VPNProfiles />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/sites" element={
+          <ProtectedRoute>
+            <Layout>
+              <SitesZones />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/settings" element={
+          <ProtectedRoute>
+            <Layout>
+              <Settings />
+            </Layout>
+          </ProtectedRoute>
+        } />
       </Routes>
     </Router>
   );
