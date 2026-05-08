@@ -5,9 +5,18 @@ from ...core.database import get_db
 from ...api.deps import get_current_user
 from ...models import models
 from ...schemas import schemas
-from ...core.security import get_password_hash
+from ...core.security import get_password_hash, verify_password
 
 router = APIRouter()
+
+@router.post("/change-password")
+def change_password(pwd_in: schemas.PasswordChange, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if not verify_password(pwd_in.current_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Incorrect current password")
+    
+    current_user.hashed_password = get_password_hash(pwd_in.new_password)
+    db.commit()
+    return {"status": "success", "message": "Password updated successfully"}
 
 @router.get("/", response_model=List[schemas.UserResponse])
 def get_users(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):

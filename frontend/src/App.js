@@ -4,11 +4,11 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import VPNProfiles from './pages/VPNProfiles';
 import UserManagement from './pages/UserManagement';
+import Settings from './pages/Settings';
 import Login from './pages/Login';
 
 // Placeholder pages for routes
 const SitesZones = () => <div className="p-8"><h2 className="text-2xl font-bold">Sites & Zones</h2><p className="mt-4 text-gray-600">Site and Zone management interface coming soon.</p></div>;
-const Settings = () => <div className="p-8"><h2 className="text-2xl font-bold">Settings</h2><p className="mt-4 text-gray-600">Global application settings and SMTP configuration.</p></div>;
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }) => {

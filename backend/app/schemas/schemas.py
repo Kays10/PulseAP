@@ -97,6 +97,10 @@ class UserResponse(UserBase):
     id: int
     model_config = ConfigDict(from_attributes=True)
 
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
+
 class DashboardStats(BaseModel):
     total_aps: int
     online_aps: int

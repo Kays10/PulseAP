@@ -47,6 +47,7 @@ export const userService = {
   getAll: () => api.get('/users').then(res => res.data),
   create: (userData) => api.post('/users', userData).then(res => res.data),
   delete: (id) => api.delete(`/users/${id}`).then(res => res.data),
+  changePassword: (pwdData) => api.post('/users/change-password', pwdData).then(res => res.data),
 };
 
 export default api;
