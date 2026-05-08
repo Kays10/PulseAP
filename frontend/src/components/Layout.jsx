@@ -22,6 +22,7 @@ const Layout = ({ children }) => {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Sites & Zones', path: '/sites', icon: Network },
     { name: 'VPN Profiles', path: '/vpns', icon: ShieldCheck },
+    { name: 'User Management', path: '/users', icon: User },
     { name: 'Settings', path: '/settings', icon: Settings },
   ];
 

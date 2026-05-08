@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .api.endpoints import auth, vpn, dashboard, management
+from .api.endpoints import auth, vpn, dashboard, management, users
 from .tasks import cron
 from .core.config import settings
 from .tasks.worker import start_scheduler
@@ -28,6 +28,7 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(vpn.router, prefix="/api/vpn", tags=["vpn"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["dashboard"])
 app.include_router(management.router, prefix="/api", tags=["management"])
+app.include_router(users.router, prefix="/api/users", tags=["users"])
 app.include_router(cron.router, prefix="/api/tasks", tags=["tasks"])
 
 @app.get("/")

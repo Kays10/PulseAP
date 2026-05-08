@@ -43,4 +43,10 @@ export const vpnService = {
   disconnect: (id) => api.post(`/vpn/${id}/disconnect`).then(res => res.data),
 };
 
+export const userService = {
+  getAll: () => api.get('/users').then(res => res.data),
+  create: (userData) => api.post('/users', userData).then(res => res.data),
+  delete: (id) => api.delete(`/users/${id}`).then(res => res.data),
+};
+
 export default api;
