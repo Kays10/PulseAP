@@ -35,7 +35,6 @@ const Login = () => {
               <span className="text-6xl font-black text-white tracking-tighter leading-none">VOD</span>
               <div className="flex flex-col ml-3 border-l-4 border-[#FBC02D] pl-3 items-start justify-center">
                 <span className="text-[#FBC02D] text-sm font-black tracking-[0.3em] uppercase leading-none">GROUP</span>
-                <span className="text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase leading-none mt-1.5">SOLUTIONS</span>
               </div>
             </div>
           </div>
@@ -103,7 +102,7 @@ const Login = () => {
 
           <div className="mt-8 text-center">
             <p className="text-gray-400 text-xs font-bold tracking-widest uppercase">
-              Property of VOD Group &copy; 2024
+              Property of VOD Group &copy; 2026
             </p>
           </div>
         </div>
