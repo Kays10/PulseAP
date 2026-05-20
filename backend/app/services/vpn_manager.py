@@ -27,13 +27,16 @@ class VPNManager:
             password = decrypt_password(vpn.encrypted_password) if vpn.encrypted_password else None
 
             if vpn.type == VPNType.FORTI:
-                # Create a temporary config file for openfortivpn
+                # Create a temporary config file for openfortivpn - NO default routes or DNS changes!
                 config_content = f"""host = {vpn.host}
 port = {vpn.port}
 username = {vpn.username}
 password = {password}
 set-dns = 0
 pppd-use-peerdns = 0
+set-routes = 0
+# Add custom routes for controller networks
+pppd-ipparam = "route add 172.23.100.0/24 dev %s"
 """
                 # Create temp file
                 fd, config_path = tempfile.mkstemp(suffix='.conf', prefix='fortivpn-')
