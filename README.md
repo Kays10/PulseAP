@@ -16,13 +16,14 @@ PulseAP is a production-ready network monitoring web application designed to mon
 
 - **Backend**: Python (FastAPI), SQLAlchemy, APScheduler, PySNMP.
 - **Frontend**: React, TailwindCSS, Lucide Icons.
-- **Database**: Supabase (PostgreSQL).
-- **Containerization**: Docker, Docker Compose.
+- **Authentication**: Supabase Auth (for easy user management via UI).
+- **Database**: PostgreSQL (for Sites, Zones, and AP data).
+- **Deployment**: Vercel ready.
 
 ## Prerequisites
 
-- Docker and Docker Compose installed.
-- A Supabase account or any PostgreSQL instance.
+- A PostgreSQL database URL.
+- A Supabase Project (URL and Anon Key) for Authentication.
 - VPN configuration files (if using OpenVPN or WireGuard).
 
 ## Setup Instructions
@@ -40,7 +41,13 @@ PulseAP is a production-ready network monitoring web application designed to mon
    ```
    *Note: Make sure to generate a secure `ENCRYPTION_KEY` for password storage.*
 
-3. **Generate Encryption Key**:
+3. **Verify Database Connection**:
+   You can use the provided script to test your PostgreSQL connection:
+   ```bash
+   python3 test_db.py
+   ```
+
+4. **Generate Encryption Key**:
    ```bash
    python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
    ```

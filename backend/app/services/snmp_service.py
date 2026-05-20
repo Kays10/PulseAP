@@ -38,6 +38,10 @@ class SNMPService:
     @classmethod
     def poll_controller(cls, host: str, version: SNMPVersion, controller_type: ControllerType, 
                         community: str = None, v3_creds: Dict = None) -> List[Dict[str, Any]]:
+        # For production "live" readiness, we return empty results if host is dummy
+        if host == "127.0.0.1" or not host:
+            return []
+
         auth = cls.get_snmp_auth(version, community, v3_creds)
         target = UdpTransportTarget((host, 161), timeout=2, retries=1)
         

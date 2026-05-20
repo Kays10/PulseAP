@@ -36,7 +36,7 @@ class ControllerBase(BaseModel):
     snmp_version: SNMPVersion
     community_string: Optional[str] = None
     snmp_v3_credentials: Optional[Dict[str, Any]] = None
-    vpn_profile_id: int
+    vpn_profile_id: Optional[int] = None
     controller_type: ControllerType
     poll_interval: int = 300
 

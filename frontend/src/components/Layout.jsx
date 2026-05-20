@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { authService } from '../services/api';
 import { 
   LayoutDashboard, 
   Settings, 
@@ -12,9 +13,11 @@ import {
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isAdmin = authService.isAdmin();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user_role');
     navigate('/login');
   };
 
@@ -22,8 +25,11 @@ const Layout = ({ children }) => {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Sites & Zones', path: '/sites', icon: Network },
     { name: 'VPN Profiles', path: '/vpns', icon: ShieldCheck },
-    { name: 'Settings', path: '/settings', icon: Settings },
   ];
+
+  if (isAdmin) {
+    menuItems.push({ name: 'Settings', path: '/settings', icon: Settings });
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex">

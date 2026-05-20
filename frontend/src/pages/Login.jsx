@@ -4,7 +4,7 @@ import { authService } from '../services/api';
 import { Activity, Lock, User, AlertCircle } from 'lucide-react';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,10 +16,10 @@ const Login = () => {
     setError('');
     
     try {
-      await authService.login(username, password);
+      await authService.login(email, password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Invalid username or password');
+      setError(err.message || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -58,16 +58,16 @@ const Login = () => {
             )}
 
             <div>
-              <label className="block text-xs font-black text-[#2D333A] uppercase tracking-widest mb-2 ml-1">Username</label>
+              <label className="block text-xs font-black text-[#2D333A] uppercase tracking-widest mb-2 ml-1">Email Address</label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                 <input 
                   required
-                  type="text" 
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:ring-4 focus:ring-[#FBC02D]/20 focus:border-[#FBC02D] transition-all outline-none font-medium"
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                 />
               </div>
             </div>

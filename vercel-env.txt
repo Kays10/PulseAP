@@ -1,0 +1,15 @@
+PROJECT_NAME=PulseAP
+SECRET_KEY=5LvToMFASfQCKX-FKS7FHT9baDxwbCrEfH3raC1ZYhzHKhzpwdlguMtwXcbNzh9UrLsClhS9wZeCmfa-nQZwiw
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
+DATABASE_URL=postgresql://postgres.sbpacvruvgubxupvegxr:Mukuru101%21%40%23@aws-1-eu-central-1.pooler.supabase.com:5432/postgres
+SUPABASE_URL=https://sbpacvruvgubxupvegxr.supabase.co
+SUPABASE_KEY=sb_publishable_cmAuAhiq60Y3zsHHMrOgfQ_s9-idY1b
+ENCRYPTION_KEY=Q4Krba3w59wpb2Ltg-6AMYTity7gdXO2JQmaNQ93Pq0=
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+SMTP_FROM=noreply@pulseap.com
+SMTP_TO=admin@example.com
+POLL_INTERVAL=300

@@ -1,4 +1,3 @@
-from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy.orm import Session
 from datetime import datetime
 import logging
@@ -6,6 +5,7 @@ from ..core.database import SessionLocal
 from ..models import models
 from ..services.snmp_service import snmp_service
 from ..services.vpn_manager import vpn_manager
+from ..core.alerts import send_alert_email
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ def poll_all_controllers():
         for controller in controllers:
             # Check VPN status
             vpn = controller.vpn_profile
-            if not vpn_manager.is_connected(vpn.id):
+            if vpn and not vpn_manager.is_connected(vpn.id):
                 logger.info(f"VPN {vpn.name} disconnected, attempting reconnect before polling {controller.name}")
                 if not vpn_manager.connect(vpn):
                     logger.error(f"Failed to reconnect VPN {vpn.name}, skipping controller {controller.name}")
@@ -36,8 +36,7 @@ def poll_all_controllers():
             for ap_data in ap_results:
                 ap = db.query(models.AccessPoint).filter(models.AccessPoint.mac_address == ap_data['mac']).first()
                 if not ap:
-                    # Auto-discovery: Create new AP if not found
-                    # We'd need to map to a zone here, for now we skip or add to a default zone
+                    # Auto-discovery if needed, or skip
                     continue
                 
                 status_record = db.query(models.APStatus).filter(models.APStatus.ap_id == ap.id).first()
@@ -49,6 +48,7 @@ def poll_all_controllers():
                 else:
                     if status_record.status != new_status:
                         # Status changed
+                        old_status = status_record.status
                         status_record.status = new_status
                         status_record.last_status_change = datetime.utcnow()
                         
@@ -63,6 +63,13 @@ def poll_all_controllers():
                         )
                         db.add(alert)
                         
+                        # Send Email Alert
+                        try:
+                            site_name = ap.zone.site.name if ap.zone and ap.zone.site else "Unknown Site"
+                            send_alert_email(ap.name, site_name, new_status.value)
+                        except Exception as e:
+                            logger.error(f"Failed to trigger email alert: {e}")
+                        
                     if new_status == models.APStatusEnum.ONLINE:
                         status_record.last_seen = datetime.utcnow()
                 
@@ -76,10 +83,3 @@ def poll_all_controllers():
         db.rollback()
     finally:
         db.close()
-
-def start_scheduler():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(poll_all_controllers, 'interval', minutes=5)
-    scheduler.start()
-    logger.info("Scheduler started")
-    return scheduler

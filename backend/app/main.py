@@ -3,17 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from .api.endpoints import auth, vpn, dashboard, management
 from .tasks import cron
 from .core.config import settings
-from .tasks.worker import start_scheduler
 
 import os
 
 app = FastAPI(title=settings.PROJECT_NAME)
-
-@app.on_event("startup")
-async def startup_event():
-    # Background scheduler is disabled on Vercel
-    # We will use Vercel Cron Jobs instead
-    pass
 
 # Set all CORS enabled origins
 app.add_middleware(

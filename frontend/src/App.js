@@ -5,15 +5,24 @@ import Dashboard from './pages/Dashboard';
 import VPNProfiles from './pages/VPNProfiles';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import { authService } from './services/api';
 
-// Placeholder pages for routes
-const SitesZones = () => <div className="p-8"><h2 className="text-2xl font-bold">Sites & Zones</h2><p className="mt-4 text-gray-600">Site and Zone management interface coming soon.</p></div>;
+import SitesZones from './pages/SitesZones';
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   if (!token) {
     return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
+// Admin Route wrapper
+const AdminRoute = ({ children }) => {
+  const isAdmin = authService.isAdmin();
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
   }
   return children;
 };
@@ -46,9 +55,11 @@ function App() {
         } />
         <Route path="/settings" element={
           <ProtectedRoute>
-            <Layout>
-              <Settings />
-            </Layout>
+            <AdminRoute>
+              <Layout>
+                <Settings />
+              </Layout>
+            </AdminRoute>
           </ProtectedRoute>
         } />
       </Routes>

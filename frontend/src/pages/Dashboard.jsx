@@ -5,8 +5,7 @@ import {
   WifiOff, 
   MapPin, 
   Activity,
-  ArrowUpRight,
-  ArrowDownRight
+  ArrowUpRight
 } from 'lucide-react';
 
 const StatCard = ({ title, value, icon: Icon, color, detail }) => (
