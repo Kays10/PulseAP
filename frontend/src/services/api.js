@@ -18,23 +18,24 @@ api.interceptors.request.use((config) => {
 });
 
 export const authService = {
-  login: async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+  login: async (username, password) => {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    
+    const response = await api.post('/auth/login', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
     
-    if (error) throw error;
-    
-    if (data.session) {
-      localStorage.setItem('token', data.session.access_token);
-      const is_admin = data.user?.user_metadata?.is_admin || data.user?.app_metadata?.is_admin;
-      localStorage.setItem('user_role', is_admin ? 'admin' : 'read-only');
-      return data.session;
+    if (response.data.access_token) {
+      localStorage.setItem('token', response.data.access_token);
+      localStorage.setItem('user_role', 'admin'); // For local, we'll set admin by default
+      return response.data;
     }
   },
   logout: async () => {
-    await supabase.auth.signOut();
     localStorage.removeItem('token');
     localStorage.removeItem('user_role');
   },
