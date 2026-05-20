@@ -244,19 +244,25 @@ const VPNProfiles = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Config Path / Port</label>
-                <input className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-vod-yellow outline-none font-mono text-sm transition-all"
-                  placeholder="e.g. 443 or /etc/openvpn/client.conf"
-                  value={formData.config_file_path || formData.port}
-                  onChange={e => {
-                    const val = e.target.value;
-                    if (formData.type === 'FORTI' && !isNaN(val)) {
-                      setFormData({...formData, port: parseInt(val), config_file_path: ''});
-                    } else {
-                      setFormData({...formData, config_file_path: val, port: null});
-                    }
-                  }} />
+              <div className="grid grid-cols-2 gap-4">
+                {formData.type === 'FORTI' && (
+                  <div>
+                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Port</label>
+                    <input type="number" className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-vod-yellow outline-none font-medium transition-all"
+                      placeholder="443"
+                      value={formData.port}
+                      onChange={e => setFormData({...formData, port: e.target.value})} />
+                  </div>
+                )}
+                {(formData.type === 'OPENVPN' || formData.type === 'WIREGUARD') && (
+                  <div className="col-span-2">
+                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Config File Path</label>
+                    <input className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-vod-yellow outline-none font-mono text-sm transition-all"
+                      placeholder="/etc/openvpn/client.conf"
+                      value={formData.config_file_path}
+                      onChange={e => setFormData({...formData, config_file_path: e.target.value})} />
+                  </div>
+                )}
               </div>
 
               <button type="submit" className="w-full bg-vod-dark text-white py-5 rounded-2xl font-black text-lg hover:scale-[1.02] transition-all shadow-xl mt-4">
