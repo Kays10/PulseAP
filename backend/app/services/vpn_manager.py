@@ -2,6 +2,7 @@ import subprocess
 import os
 import signal
 import logging
+import tempfile
 from typing import Dict
 from ..models.models import VPNType, VPNProfile
 from ..core.security import decrypt_password
@@ -11,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 class VPNManager:
     _processes: Dict[int, subprocess.Popen] = {}
+    _config_files: Dict[int, str] = {}
 
     @classmethod
     def connect(cls, vpn: VPNProfile) -> bool:
@@ -25,7 +27,24 @@ class VPNManager:
             password = decrypt_password(vpn.encrypted_password) if vpn.encrypted_password else None
 
             if vpn.type == VPNType.FORTI:
-                cmd = ["openfortivpn", f"{vpn.host}:{vpn.port}", "-u", vpn.username, "-p", password]
+                # Create a temporary config file for openfortivpn
+                config_content = f"""host = {vpn.host}
+port = {vpn.port}
+username = {vpn.username}
+password = {password}
+set-dns = 0
+pppd-use-peerdns = 0
+"""
+                # Create temp file
+                fd, config_path = tempfile.mkstemp(suffix='.conf', prefix='fortivpn-')
+                with os.fdopen(fd, 'w') as f:
+                    f.write(config_content)
+                
+                cls._config_files[vpn.id] = config_path
+                
+                # Use full path to openfortivpn
+                cmd = ["/opt/homebrew/bin/openfortivpn", "-c", config_path]
+                
             elif vpn.type == VPNType.OPENVPN:
                 cmd = ["openvpn", "--config", vpn.config_file_path]
             elif vpn.type == VPNType.WIREGUARD:
@@ -44,6 +63,13 @@ class VPNManager:
             return True
         except Exception as e:
             logger.error(f"Failed to connect VPN {vpn.name}: {e}")
+            # Clean up temp file if created
+            if vpn.id in cls._config_files:
+                try:
+                    os.unlink(cls._config_files[vpn.id])
+                    del cls._config_files[vpn.id]
+                except:
+                    pass
             return False
 
     @classmethod
@@ -62,6 +88,15 @@ class VPNManager:
             finally:
                 del cls._processes[vpn_id]
                 logger.info(f"Disconnected VPN ID: {vpn_id}")
+        
+        # Clean up temporary config file if it exists
+        if vpn_id in cls._config_files:
+            try:
+                os.unlink(cls._config_files[vpn_id])
+                del cls._config_files[vpn_id]
+                logger.info(f"Cleaned up config file for VPN ID: {vpn_id}")
+            except Exception as e:
+                logger.error(f"Error cleaning up config file: {e}")
 
     @classmethod
     def is_connected(cls, vpn_id: int) -> bool:
